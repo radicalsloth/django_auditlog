@@ -28,6 +28,9 @@ class LogEntryAdmin(admin.ModelAdmin, LogBaseAdminMixin, LogEntryAdminMixin):
     def has_add_permission(self, request):
         # As audit admin doesn't allow log creation from admin
         return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 admin.site.register(LogEntry, LogEntryAdmin)

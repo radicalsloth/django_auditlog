@@ -12,15 +12,14 @@ from django.utils.timezone import localtime
 
 from auditlog.models import LogEntry
 from auditlog.registry import auditlog
+from django.http import HttpResponse
+import csv
 
 MAX = 75
 
 
 class LogBaseAdminMixin:
     """Mixin for allowing export of records as a CSV"""
-
-    def has_delete_permission(self, request, obj=None):
-        return False
 
     def export_as_csv(self, request, queryset):
         """Export the selected records as a CSV"""
