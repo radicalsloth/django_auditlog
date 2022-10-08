@@ -34,3 +34,11 @@ class LogEntryAdmin(admin.ModelAdmin, LogBaseAdminMixin, LogEntryAdminMixin):
 
 
 admin.site.register(LogEntry, LogEntryAdmin)
+
+
+@admin.register(UserViewLog)
+class UserRequestLogAdmin(admin.ModelAdmin, ExportCsvMixin):
+    """Admin for user request logs"""
+    list_display = ['user', 'full_path', 'created_on', 'ip_address',]
+    list_filter = ['user', 'created_on', 'ip_address']
+    actions = ['export_as_csv']

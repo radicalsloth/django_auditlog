@@ -531,3 +531,20 @@ class AuditlogHistoryField(GenericRelation):
         # method.  However, because we don't want to delete these related
         # objects, we simply return an empty list.
         return []
+
+
+
+class UserRequestLogs(models.Model):
+    """Class for representing logs of a user that made a particular request"""
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    ip_address = models.CharField(max_length=40, blank=True, null=True)
+    request_method = models.CharField(max_length=10)
+    full_path = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + str(self.created_on)
+
+    class Meta:
+        verbose_name = 'User Request Log'
+        verbose_name_plural = 'User Request Logs'
