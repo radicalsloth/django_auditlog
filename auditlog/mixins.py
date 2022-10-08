@@ -36,7 +36,7 @@ class LogBaseAdminMixin:
     export_as_csv.short_description = "Export selected logs as CSV"
 
 
-class LogEntryAdminMixin(LogBaseAdminMixin):
+class LogEntryAdminMixin:
     @admin.display(description="Created")
     def created(self, obj):
         return localtime(obj.timestamp)
