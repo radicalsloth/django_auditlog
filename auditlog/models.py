@@ -365,6 +365,17 @@ class LogEntry(models.Model):
         verbose_name = _("log entry")
         verbose_name_plural = _("log entries")
 
+    def get_action(self):
+        """Returns the action for the module"""
+        def __str__(self):
+        if self.action == self.Action.CREATE:
+            return "Created"
+        elif self.action == self.Action.UPDATE:
+            return "Updated"
+        elif self.action == self.Action.DELETE:
+            return "Deleted"
+        return "Logged"
+
     def __str__(self):
         if self.action == self.Action.CREATE:
             fstring = _("Created {repr:s}")
