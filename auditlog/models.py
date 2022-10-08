@@ -534,7 +534,7 @@ class AuditlogHistoryField(GenericRelation):
 
 
 
-class UserRequestLogs(models.Model):
+class UserRequestLog(models.Model):
     """Class for representing logs of a user that made a particular request"""
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     ip_address = models.CharField(max_length=40, blank=True, null=True)
