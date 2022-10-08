@@ -4,20 +4,21 @@ import time
 import logging
 import os
 from auditlog.models import UserRequestLog
+from django.conf import settings
 
 
-class AuditLogMiddlewareLogUserRequests:
+class AuditlogMiddlewareLogUserRequests:
     """Middleware for logging all user requests"""
 
     def __init__(self, get_response):
-        self.enable_to_file_logging = False
-        self.enable_to_database_logging = True
-        self.url_blacklist = [
+        self.enable_to_file_logging = getattr(settings, 'AUDITLOG_ENABLE_FILE_LOGGING', False)
+        self.enable_to_database_logging = getattr(settings, 'AUDITLOG_ENABLE_DATABASE_LOGGING', True)
+        self.url_blacklist = getattr(settings, 'AUDITLOG_URL_BLACKLIST', [
             '/login',
             '/logout',
             '/admin',
             '/static',
-        ]
+        ])
         self.get_response = get_response
         self.configure_file_logging()
 
@@ -33,8 +34,8 @@ class AuditLogMiddlewareLogUserRequests:
     def configure_file_logging(self):
         """Configure custom logging"""
         if self.enable_to_file_logging:
-            self.log = logging.getLogger('useractions')
-            handler = logging.FileHandler('/user_actions.log')
+            self.log = logging.getLogger(getattr(settings, 'AUDITLOG_LOGGER_NAME', 'useractions'))
+            handler = logging.FileHandler(getattr(settings, 'AUDITLOG_USER_LOGFILE_PATH', '/user_actions.log'))
             handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
             self.log.addHandler(handler)
             self.log.setLevel(logging.INFO)
