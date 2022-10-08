@@ -16,7 +16,27 @@ from auditlog.registry import auditlog
 MAX = 75
 
 
-class LogEntryAdminMixin:
+class LogBaseAdminMixin:
+    """Mixin for allowing export of records as a CSV"""
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def export_as_csv(self, request, queryset):
+        """Export the selected records as a CSV"""
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+        return response
+    export_as_csv.short_description = "Export selected logs as CSV"
+
+
+class LogEntryAdminMixin(LogBaseAdminMixin):
     @admin.display(description="Created")
     def created(self, obj):
         return localtime(obj.timestamp)

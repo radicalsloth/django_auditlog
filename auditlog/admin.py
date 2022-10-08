@@ -23,6 +23,7 @@ class LogEntryAdmin(admin.ModelAdmin, LogEntryAdminMixin):
         (None, {"fields": ["created", "user_url", "resource_url"]}),
         ("Changes", {"fields": ["action", "msg"]}),
     ]
+    actions = ['export_as_csv']
 
     def has_add_permission(self, request):
         # As audit admin doesn't allow log creation from admin
