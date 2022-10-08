@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from auditlog.filters import ResourceTypeFilter
 from auditlog.mixins import LogEntryAdminMixin, LogBaseAdminMixin
-from auditlog.models import LogEntry
+from auditlog.models import LogEntry, UserRequestLog
 
 
 class LogEntryAdmin(admin.ModelAdmin, LogBaseAdminMixin, LogEntryAdminMixin):
