@@ -367,7 +367,6 @@ class LogEntry(models.Model):
 
     def get_action(self):
         """Returns the action for the module"""
-        def __str__(self):
         if self.action == self.Action.CREATE:
             return "Created"
         elif self.action == self.Action.UPDATE:
