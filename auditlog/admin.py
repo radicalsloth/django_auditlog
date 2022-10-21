@@ -26,10 +26,12 @@ class LogEntryAdmin(admin.ModelAdmin, LogBaseAdminMixin, LogEntryAdminMixin):
     actions = ['export_as_csv']
 
     def has_add_permission(self, request):
-        # As audit admin doesn't allow log creation from admin
         return False
     
     def has_delete_permission(self, request, obj=None):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
         return False
 
 
@@ -44,8 +46,10 @@ class UserRequestLogAdmin(admin.ModelAdmin, LogBaseAdminMixin):
     actions = ['export_as_csv']
 
     def has_add_permission(self, request):
-        # As audit admin doesn't allow log creation from admin
         return False
     
     def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
         return False
